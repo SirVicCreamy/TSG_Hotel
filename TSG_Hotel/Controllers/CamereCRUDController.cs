@@ -17,7 +17,13 @@ namespace TSG_Hotel.Controllers
             return Ok(results);
         }
 
-       
+        public IHttpActionResult InsertCam(Camere camera)
+        {
+            var insert_results = hotel.spCRUDCamere(0,camera.Capacitate,camera.Pret, "Insert").ToList();
+            return Ok(insert_results);
+        }
+
+
 
     }
 }

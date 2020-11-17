@@ -168,6 +168,9 @@
     <Compile Include="Controllers\CamereCRUDController.cs" />
     <Compile Include="Controllers\DotariCRUDController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MVCCamereCRUDController.cs" />
+    <Compile Include="Controllers\MVCDotariCRUDController.cs" />
+    <Compile Include="Controllers\MVCServiciiCRUDController.cs" />
     <Compile Include="Controllers\ServiciiCRUDController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Dotari.cs">
@@ -275,6 +278,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\MVCCamereCRUD\Camere.cshtml" />
+    <Content Include="Views\MVCServiciiCRUD\Servicii.cshtml" />
+    <Content Include="Views\MVCDotariCRUD\Dotari.cshtml" />
+    <Content Include="Views\MVCCamereCRUD\Create.cshtml" />
+    <Content Include="Views\MVCDotariCRUD\Create.cshtml" />
+    <Content Include="Views\MVCServiciiCRUD\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
