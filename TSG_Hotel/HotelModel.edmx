@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HotelDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Camere">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Capacitate" Type="int" />
+          <Property Name="Pret" Type="int" />
+        </EntityType>
+        <EntityType Name="Dotari">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nume" Type="varchar" MaxLength="50" />
+          <Property Name="Pret" Type="int" />
+        </EntityType>
+        <EntityType Name="Servicii">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nume" Type="varchar" MaxLength="50" />
+          <Property Name="Pret" Type="int" />
+        </EntityType>
+        <Function Name="spCRUDCamere" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Capacitate" Type="int" Mode="In" />
+          <Parameter Name="Pret" Type="int" Mode="In" />
+          <Parameter Name="Option" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="spCRUDDotari" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Nume" Type="nvarchar" Mode="In" />
+          <Parameter Name="Pret" Type="int" Mode="In" />
+          <Parameter Name="Option" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="spCRUDServicii" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+          <Parameter Name="Nume" Type="nvarchar" Mode="In" />
+          <Parameter Name="Pret" Type="int" Mode="In" />
+          <Parameter Name="Option" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="HotelDBModelStoreContainer">
+          <EntitySet Name="Camere" EntityType="Self.Camere" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dotari" EntityType="Self.Dotari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Servicii" EntityType="Self.Servicii" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HotelDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Camere">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Capacitate" Type="Int32" />
+          <Property Name="Pret" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Dotari">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Pret" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Servicii">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Pret" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="HotelDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cameres" EntityType="Self.Camere" />
+          <EntitySet Name="Dotaris" EntityType="Self.Dotari" />
+          <EntitySet Name="Serviciis" EntityType="Self.Servicii" />
+          <FunctionImport Name="spCRUDCamere" ReturnType="Collection(HotelDBModel.spCRUDCamere_Result)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Capacitate" Mode="In" Type="Int32" />
+            <Parameter Name="Pret" Mode="In" Type="Int32" />
+            <Parameter Name="Option" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spCRUDDotari" ReturnType="Collection(HotelDBModel.spCRUDDotari_Result)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Nume" Mode="In" Type="String" />
+            <Parameter Name="Pret" Mode="In" Type="Int32" />
+            <Parameter Name="Option" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spCRUDServicii" ReturnType="Collection(HotelDBModel.spCRUDServicii_Result)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Nume" Mode="In" Type="String" />
+            <Parameter Name="Pret" Mode="In" Type="Int32" />
+            <Parameter Name="Option" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="spCRUDCamere_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="Capacitate" Nullable="true" />
+          <Property Type="Int32" Name="Pret" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spCRUDDotari_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Nume" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Pret" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spCRUDServicii_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Nume" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Pret" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HotelDBModelStoreContainer" CdmEntityContainer="HotelDBEntities">
+          <EntitySetMapping Name="Cameres">
+            <EntityTypeMapping TypeName="HotelDBModel.Camere">
+              <MappingFragment StoreEntitySet="Camere">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Capacitate" ColumnName="Capacitate" />
+                <ScalarProperty Name="Pret" ColumnName="Pret" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dotaris">
+            <EntityTypeMapping TypeName="HotelDBModel.Dotari">
+              <MappingFragment StoreEntitySet="Dotari">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nume" ColumnName="Nume" />
+                <ScalarProperty Name="Pret" ColumnName="Pret" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Serviciis">
+            <EntityTypeMapping TypeName="HotelDBModel.Servicii">
+              <MappingFragment StoreEntitySet="Servicii">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nume" ColumnName="Nume" />
+                <ScalarProperty Name="Pret" ColumnName="Pret" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spCRUDCamere" FunctionName="HotelDBModel.Store.spCRUDCamere">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HotelDBModel.spCRUDCamere_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Capacitate" ColumnName="Capacitate" />
+                <ScalarProperty Name="Pret" ColumnName="Pret" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spCRUDDotari" FunctionName="HotelDBModel.Store.spCRUDDotari">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HotelDBModel.spCRUDDotari_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nume" ColumnName="Nume" />
+                <ScalarProperty Name="Pret" ColumnName="Pret" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spCRUDServicii" FunctionName="HotelDBModel.Store.spCRUDServicii">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HotelDBModel.spCRUDServicii_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nume" ColumnName="Nume" />
+                <ScalarProperty Name="Pret" ColumnName="Pret" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
