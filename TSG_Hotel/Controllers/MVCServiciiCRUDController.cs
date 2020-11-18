@@ -53,5 +53,26 @@ namespace TSG_Hotel.Controllers
             return View("Create");
         }
 
+        public ActionResult Details(int id)
+        {
+            ServiciiClass serviciu = null;
+            HttpClient hc = new HttpClient();
+            hc.BaseAddress = new Uri("https://localhost:44322/api/ServiciiCRUD");
+
+            var consume_api = hc.GetAsync("ServiciiCRUD?id=" + id.ToString());
+            consume_api.Wait();
+
+            var read_data = consume_api.Result;
+            if (read_data.IsSuccessStatusCode)
+            {
+                var display_details = read_data.Content.ReadAsAsync<ServiciiClass>();
+                display_details.Wait();
+                serviciu = display_details.Result;
+            }
+
+            return View(serviciu);
+
+        }
+
     }
 }

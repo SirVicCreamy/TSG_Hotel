@@ -23,7 +23,17 @@ namespace TSG_Hotel.Controllers
             return Ok(insert_results);
         }
 
+        public IHttpActionResult GetCamID(int id)
+        {
+            var details = hotel.spCRUDCamere(id, 0, 0, "GetCamID").Select(x => new CamereClass()
+            {
+                ID = x.ID,
+                Capacitate = (int)x.Capacitate,
+                Pret = (int)x.Pret
+            }).FirstOrDefault<CamereClass>();
 
+            return Ok(details);
+        }
 
     }
 }

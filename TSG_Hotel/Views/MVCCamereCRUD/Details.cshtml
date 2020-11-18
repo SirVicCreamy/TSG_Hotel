@@ -1,0 +1,42 @@
+﻿@model TSG_Hotel.Models.CamereClass
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CamereClass</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Capacitate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Capacitate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pret)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pret)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Camere")
+</p>

@@ -17,8 +17,23 @@ namespace TSG_Hotel.Controllers
             return Ok(results);
         }
 
-        
+        public IHttpActionResult InsertSer(Servicii serviciu)
+        {
+            var insert_results = hotel.spCRUDServicii(0,serviciu.Nume, serviciu.Pret, "Insert").ToList();
+            return Ok(insert_results);
+        }
 
+        public IHttpActionResult GetSerID(int id)
+        {
+            var details = hotel.spCRUDServicii(id, "", 0, "GetSerID").Select(x => new ServiciiClass()
+            {
+                ID = x.ID,
+                Nume = x.Nume,
+                Pret = (int)x.Pret
+            }).FirstOrDefault<ServiciiClass>();
+
+            return Ok(details);
+        }
 
     }
 }

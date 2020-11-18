@@ -53,5 +53,27 @@ namespace TSG_Hotel.Controllers
             return View("Create");
         }
 
+        public ActionResult Details(int id)
+        {
+            DotariClass dotare = null;
+            HttpClient hc = new HttpClient();
+            hc.BaseAddress = new Uri("https://localhost:44322/api/DotariCRUD");
+
+            var consume_api = hc.GetAsync("DotariCRUD?id=" + id.ToString());
+            consume_api.Wait();
+
+            var read_data = consume_api.Result;
+            if (read_data.IsSuccessStatusCode)
+            {
+                var display_details = read_data.Content.ReadAsAsync<DotariClass>();
+                display_details.Wait();
+                dotare = display_details.Result;
+            }
+
+            return View(dotare);
+
+        }
+
+
     }
 }

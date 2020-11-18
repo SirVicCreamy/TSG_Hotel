@@ -93,5 +93,11 @@ namespace TSG_Hotel
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spCRUDServicii_Result>("spCRUDServicii", iDParameter, numeParameter, pretParameter, optionParameter);
         }
+
+        public System.Data.Entity.DbSet<TSG_Hotel.Models.CamereClass> CamereClasses { get; set; }
+
+        public System.Data.Entity.DbSet<TSG_Hotel.Models.ServiciiClass> ServiciiClasses { get; set; }
+
+        public System.Data.Entity.DbSet<TSG_Hotel.Models.DotariClass> DotariClasses { get; set; }
     }
 }
