@@ -287,6 +287,9 @@
     <Content Include="Views\MVCCamereCRUD\Details.cshtml" />
     <Content Include="Views\MVCServiciiCRUD\Details.cshtml" />
     <Content Include="Views\MVCDotariCRUD\Details.cshtml" />
+    <Content Include="Views\MVCCamereCRUD\Edit.cshtml" />
+    <Content Include="Views\MVCDotariCRUD\Edit.cshtml" />
+    <Content Include="Views\MVCServiciiCRUD\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

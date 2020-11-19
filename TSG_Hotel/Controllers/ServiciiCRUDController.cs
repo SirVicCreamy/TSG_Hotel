@@ -35,5 +35,26 @@ namespace TSG_Hotel.Controllers
             return Ok(details);
         }
 
+        public IHttpActionResult PutSer(ServiciiClass serviciu)
+        {
+            var update_results = hotel.spCRUDServicii(serviciu.ID, serviciu.Nume, serviciu.Pret, "Update").ToList();
+            hotel.SaveChanges();
+            return Ok(update_results);
+        }
+
+
+        public IHttpActionResult DeleteSer(int id)
+        {
+            var delete_dot = hotel.spCRUDServicii(id, "", 0, "Delete").Select(x => new ServiciiClass()
+            {
+                ID = x.ID,
+                Nume = x.Nume,
+                Pret = (int)x.Pret
+            }).FirstOrDefault<ServiciiClass>();
+            hotel.SaveChanges();
+            return Ok();
+        }
+
+
     }
 }

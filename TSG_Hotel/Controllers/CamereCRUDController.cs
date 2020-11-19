@@ -35,5 +35,25 @@ namespace TSG_Hotel.Controllers
             return Ok(details);
         }
 
+        public IHttpActionResult PutCam(CamereClass camera)
+        {
+            var update_results = hotel.spCRUDCamere(camera.ID, camera.Capacitate, camera.Pret, "Update").ToList();
+            hotel.SaveChanges();
+            return Ok(update_results);
+        }
+
+
+        public IHttpActionResult DeleteCam(int id)
+        {
+            var delete_cam = hotel.spCRUDCamere(id, 0, 0, "Delete").Select(x => new CamereClass()
+            {
+                ID = x.ID,
+                Capacitate = (int)x.Capacitate,
+                Pret = (int)x.Pret
+            }).FirstOrDefault<CamereClass>();
+            hotel.SaveChanges();
+            return Ok();
+        }
+
     }
 }
