@@ -14,8 +14,20 @@ namespace TSG_Hotel
     
     public partial class Camere
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Camere()
+        {
+            this.ManagerRezervaris = new HashSet<ManagerRezervari>();
+            this.Dotaris = new HashSet<Dotari>();
+        }
+    
         public int ID { get; set; }
         public Nullable<int> Capacitate { get; set; }
         public Nullable<int> Pret { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ManagerRezervari> ManagerRezervaris { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Dotari> Dotaris { get; set; }
     }
 }

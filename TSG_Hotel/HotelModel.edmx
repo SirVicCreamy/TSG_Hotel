@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HotelDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HotelDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Camere">
           <Key>
             <PropertyRef Name="ID" />
@@ -21,6 +21,35 @@
           <Property Name="Nume" Type="varchar" MaxLength="50" />
           <Property Name="Pret" Type="int" />
         </EntityType>
+        <EntityType Name="ManagerDotari">
+          <Key>
+            <PropertyRef Name="ID_CAM" />
+            <PropertyRef Name="ID_DOT" />
+          </Key>
+          <Property Name="ID_CAM" Type="int" Nullable="false" />
+          <Property Name="ID_DOT" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ManagerRezervari">
+          <Key>
+            <PropertyRef Name="ID_USR" />
+            <PropertyRef Name="ID_CAM" />
+            <PropertyRef Name="Check_in" />
+            <PropertyRef Name="Check_out" />
+          </Key>
+          <Property Name="ID_USR" Type="int" Nullable="false" />
+          <Property Name="ID_CAM" Type="int" Nullable="false" />
+          <Property Name="Check_in" Type="date" Nullable="false" />
+          <Property Name="Check_out" Type="date" Nullable="false" />
+          <Property Name="Pret_total" Type="int" />
+        </EntityType>
+        <EntityType Name="ManagerServicii">
+          <Key>
+            <PropertyRef Name="ID_USR" />
+            <PropertyRef Name="ID_SER" />
+          </Key>
+          <Property Name="ID_USR" Type="int" Nullable="false" />
+          <Property Name="ID_SER" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Servicii">
           <Key>
             <PropertyRef Name="ID" />
@@ -29,6 +58,95 @@
           <Property Name="Nume" Type="varchar" MaxLength="50" />
           <Property Name="Pret" Type="int" />
         </EntityType>
+        <EntityType Name="Useri">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nume" Type="varchar" MaxLength="50" />
+          <Property Name="Prenume" Type="varchar" MaxLength="50" />
+          <Property Name="Telefon" Type="varchar" MaxLength="10" />
+          <Property Name="Mail" Type="varchar" MaxLength="70" />
+          <Property Name="Tip" Type="varchar" MaxLength="6" />
+        </EntityType>
+        <Association Name="FK__ManagerDo__ID_CA__2EDAF651">
+          <End Role="Camere" Type="Self.Camere" Multiplicity="1" />
+          <End Role="ManagerDotari" Type="Self.ManagerDotari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Camere">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ManagerDotari">
+              <PropertyRef Name="ID_CAM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ManagerDo__ID_DO__2FCF1A8A">
+          <End Role="Dotari" Type="Self.Dotari" Multiplicity="1" />
+          <End Role="ManagerDotari" Type="Self.ManagerDotari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dotari">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ManagerDotari">
+              <PropertyRef Name="ID_DOT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ManagerRe__ID_CA__339FAB6E">
+          <End Role="Camere" Type="Self.Camere" Multiplicity="1" />
+          <End Role="ManagerRezervari" Type="Self.ManagerRezervari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Camere">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ManagerRezervari">
+              <PropertyRef Name="ID_CAM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ManagerRe__ID_US__32AB8735">
+          <End Role="Useri" Type="Self.Useri" Multiplicity="1" />
+          <End Role="ManagerRezervari" Type="Self.ManagerRezervari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Useri">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ManagerRezervari">
+              <PropertyRef Name="ID_USR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ManagerSe__ID_SE__395884C4">
+          <End Role="Servicii" Type="Self.Servicii" Multiplicity="1" />
+          <End Role="ManagerServicii" Type="Self.ManagerServicii" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servicii">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ManagerServicii">
+              <PropertyRef Name="ID_SER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ManagerSe__ID_US__3864608B">
+          <End Role="Useri" Type="Self.Useri" Multiplicity="1" />
+          <End Role="ManagerServicii" Type="Self.ManagerServicii" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Useri">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ManagerServicii">
+              <PropertyRef Name="ID_USR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spCalculPret" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_USR" Type="int" Mode="In" />
+          <Parameter Name="ID_CAM" Type="int" Mode="In" />
+          <Parameter Name="Check_in" Type="date" Mode="In" />
+          <Parameter Name="Check_out" Type="date" Mode="In" />
+        </Function>
         <Function Name="spCRUDCamere" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
           <Parameter Name="Capacitate" Type="int" Mode="In" />
@@ -47,13 +165,57 @@
           <Parameter Name="Pret" Type="int" Mode="In" />
           <Parameter Name="Option" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="spManagerDotari" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_CAM" Type="int" Mode="In" />
+          <Parameter Name="ID_DOT" Type="int" Mode="In" />
+          <Parameter Name="Option" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="spManagerRezervari" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_USR" Type="int" Mode="In" />
+          <Parameter Name="ID_CAM" Type="int" Mode="In" />
+          <Parameter Name="Check_in" Type="date" Mode="In" />
+          <Parameter Name="Check_out" Type="date" Mode="In" />
+          <Parameter Name="Option" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="spManagerServicii" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_USR" Type="int" Mode="In" />
+          <Parameter Name="ID_SER" Type="int" Mode="In" />
+          <Parameter Name="Option" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="HotelDBModelStoreContainer">
           <EntitySet Name="Camere" EntityType="Self.Camere" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dotari" EntityType="Self.Dotari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ManagerDotari" EntityType="Self.ManagerDotari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ManagerRezervari" EntityType="Self.ManagerRezervari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ManagerServicii" EntityType="Self.ManagerServicii" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Servicii" EntityType="Self.Servicii" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Useri" EntityType="Self.Useri" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ManagerDo__ID_CA__2EDAF651" Association="Self.FK__ManagerDo__ID_CA__2EDAF651">
+            <End Role="Camere" EntitySet="Camere" />
+            <End Role="ManagerDotari" EntitySet="ManagerDotari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ManagerDo__ID_DO__2FCF1A8A" Association="Self.FK__ManagerDo__ID_DO__2FCF1A8A">
+            <End Role="Dotari" EntitySet="Dotari" />
+            <End Role="ManagerDotari" EntitySet="ManagerDotari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ManagerRe__ID_CA__339FAB6E" Association="Self.FK__ManagerRe__ID_CA__339FAB6E">
+            <End Role="Camere" EntitySet="Camere" />
+            <End Role="ManagerRezervari" EntitySet="ManagerRezervari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ManagerRe__ID_US__32AB8735" Association="Self.FK__ManagerRe__ID_US__32AB8735">
+            <End Role="Useri" EntitySet="Useri" />
+            <End Role="ManagerRezervari" EntitySet="ManagerRezervari" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ManagerSe__ID_SE__395884C4" Association="Self.FK__ManagerSe__ID_SE__395884C4">
+            <End Role="Servicii" EntitySet="Servicii" />
+            <End Role="ManagerServicii" EntitySet="ManagerServicii" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ManagerSe__ID_US__3864608B" Association="Self.FK__ManagerSe__ID_US__3864608B">
+            <End Role="Useri" EntitySet="Useri" />
+            <End Role="ManagerServicii" EntitySet="ManagerServicii" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HotelDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -64,6 +226,8 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Capacitate" Type="Int32" />
           <Property Name="Pret" Type="Int32" />
+          <NavigationProperty Name="ManagerRezervaris" Relationship="Self.FK__ManagerRe__ID_CA__339FAB6E" FromRole="Camere" ToRole="ManagerRezervari" />
+          <NavigationProperty Name="Dotaris" Relationship="Self.ManagerDotari" FromRole="Camere" ToRole="Dotari" />
         </EntityType>
         <EntityType Name="Dotari">
           <Key>
@@ -72,6 +236,22 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Pret" Type="Int32" />
+          <NavigationProperty Name="Cameres" Relationship="Self.ManagerDotari" FromRole="Dotari" ToRole="Camere" />
+        </EntityType>
+        <EntityType Name="ManagerRezervari">
+          <Key>
+            <PropertyRef Name="ID_USR" />
+            <PropertyRef Name="ID_CAM" />
+            <PropertyRef Name="Check_in" />
+            <PropertyRef Name="Check_out" />
+          </Key>
+          <Property Name="ID_USR" Type="Int32" Nullable="false" />
+          <Property Name="ID_CAM" Type="Int32" Nullable="false" />
+          <Property Name="Check_in" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Check_out" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Camere" Relationship="Self.FK__ManagerRe__ID_CA__339FAB6E" FromRole="ManagerRezervari" ToRole="Camere" />
+          <NavigationProperty Name="Useri" Relationship="Self.FK__ManagerRe__ID_US__32AB8735" FromRole="ManagerRezervari" ToRole="Useri" />
+          <Property Name="Pret_total" Type="Int32" />
         </EntityType>
         <EntityType Name="Servicii">
           <Key>
@@ -80,11 +260,75 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Pret" Type="Int32" />
+          <NavigationProperty Name="Useris" Relationship="Self.ManagerServicii" FromRole="Servicii" ToRole="Useri" />
         </EntityType>
+        <EntityType Name="Useri">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Prenume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telefon" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Mail" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="Tip" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ManagerRezervaris" Relationship="Self.FK__ManagerRe__ID_US__32AB8735" FromRole="Useri" ToRole="ManagerRezervari" />
+          <NavigationProperty Name="Serviciis" Relationship="Self.ManagerServicii" FromRole="Useri" ToRole="Servicii" />
+        </EntityType>
+        <Association Name="FK__ManagerRe__ID_CA__339FAB6E">
+          <End Role="Camere" Type="Self.Camere" Multiplicity="1" />
+          <End Role="ManagerRezervari" Type="Self.ManagerRezervari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Camere">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ManagerRezervari">
+              <PropertyRef Name="ID_CAM" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ManagerRe__ID_US__32AB8735">
+          <End Role="Useri" Type="Self.Useri" Multiplicity="1" />
+          <End Role="ManagerRezervari" Type="Self.ManagerRezervari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Useri">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ManagerRezervari">
+              <PropertyRef Name="ID_USR" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ManagerDotari">
+          <End Role="Camere" Type="Self.Camere" Multiplicity="*" />
+          <End Role="Dotari" Type="Self.Dotari" Multiplicity="*" />
+        </Association>
+        <Association Name="ManagerServicii">
+          <End Role="Servicii" Type="Self.Servicii" Multiplicity="*" />
+          <End Role="Useri" Type="Self.Useri" Multiplicity="*" />
+        </Association>
         <EntityContainer Name="HotelDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cameres" EntityType="Self.Camere" />
           <EntitySet Name="Dotaris" EntityType="Self.Dotari" />
+          <EntitySet Name="ManagerRezervaris" EntityType="Self.ManagerRezervari" />
           <EntitySet Name="Serviciis" EntityType="Self.Servicii" />
+          <EntitySet Name="Useris" EntityType="Self.Useri" />
+          <AssociationSet Name="FK__ManagerRe__ID_CA__339FAB6E" Association="Self.FK__ManagerRe__ID_CA__339FAB6E">
+            <End Role="Camere" EntitySet="Cameres" />
+            <End Role="ManagerRezervari" EntitySet="ManagerRezervaris" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ManagerRe__ID_US__32AB8735" Association="Self.FK__ManagerRe__ID_US__32AB8735">
+            <End Role="Useri" EntitySet="Useris" />
+            <End Role="ManagerRezervari" EntitySet="ManagerRezervaris" />
+          </AssociationSet>
+          <AssociationSet Name="ManagerDotari" Association="Self.ManagerDotari">
+            <End Role="Camere" EntitySet="Cameres" />
+            <End Role="Dotari" EntitySet="Dotaris" />
+          </AssociationSet>
+          <AssociationSet Name="ManagerServicii" Association="Self.ManagerServicii">
+            <End Role="Servicii" EntitySet="Serviciis" />
+            <End Role="Useri" EntitySet="Useris" />
+          </AssociationSet>
           <FunctionImport Name="spCRUDCamere" ReturnType="Collection(HotelDBModel.spCRUDCamere_Result)">
             <Parameter Name="ID" Mode="In" Type="Int32" />
             <Parameter Name="Capacitate" Mode="In" Type="Int32" />
@@ -103,6 +347,29 @@
             <Parameter Name="Pret" Mode="In" Type="Int32" />
             <Parameter Name="Option" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="spManagerDotari" ReturnType="Collection(HotelDBModel.spManagerDotari_Result)">
+            <Parameter Name="ID_CAM" Mode="In" Type="Int32" />
+            <Parameter Name="ID_DOT" Mode="In" Type="Int32" />
+            <Parameter Name="Option" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spManagerServicii" ReturnType="Collection(HotelDBModel.spManagerServicii_Result)">
+            <Parameter Name="ID_USR" Mode="In" Type="Int32" />
+            <Parameter Name="ID_SER" Mode="In" Type="Int32" />
+            <Parameter Name="Option" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spManagerRezervari" ReturnType="Collection(HotelDBModel.spManagerRezervari_Result)">
+            <Parameter Name="ID_USR" Mode="In" Type="Int32" />
+            <Parameter Name="ID_CAM" Mode="In" Type="Int32" />
+            <Parameter Name="Check_in" Mode="In" Type="DateTime" />
+            <Parameter Name="Check_out" Mode="In" Type="DateTime" />
+            <Parameter Name="Option" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spCalculPret">
+            <Parameter Name="ID_USR" Mode="In" Type="Int32" />
+            <Parameter Name="ID_CAM" Mode="In" Type="Int32" />
+            <Parameter Name="Check_in" Mode="In" Type="DateTime" />
+            <Parameter Name="Check_out" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="spCRUDCamere_Result">
           <Property Type="Int32" Name="ID" Nullable="false" />
@@ -118,6 +385,20 @@
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Nume" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="Pret" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spManagerDotari_Result">
+          <Property Type="Int32" Name="ID_CAM" Nullable="false" />
+          <Property Type="Int32" Name="ID_DOT" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spManagerServicii_Result">
+          <Property Type="Int32" Name="ID_USR" Nullable="false" />
+          <Property Type="Int32" Name="ID_SER" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spManagerRezervari_Result">
+          <Property Type="Int32" Name="ID_USR" Nullable="false" />
+          <Property Type="Int32" Name="ID_CAM" Nullable="false" />
+          <Property Type="DateTime" Name="Check_in" Nullable="false" />
+          <Property Type="DateTime" Name="Check_out" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -143,6 +424,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ManagerRezervaris">
+            <EntityTypeMapping TypeName="HotelDBModel.ManagerRezervari">
+              <MappingFragment StoreEntitySet="ManagerRezervari">
+                <ScalarProperty Name="Pret_total" ColumnName="Pret_total" />
+                <ScalarProperty Name="ID_USR" ColumnName="ID_USR" />
+                <ScalarProperty Name="ID_CAM" ColumnName="ID_CAM" />
+                <ScalarProperty Name="Check_in" ColumnName="Check_in" />
+                <ScalarProperty Name="Check_out" ColumnName="Check_out" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Serviciis">
             <EntityTypeMapping TypeName="HotelDBModel.Servicii">
               <MappingFragment StoreEntitySet="Servicii">
@@ -152,6 +444,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Useris">
+            <EntityTypeMapping TypeName="HotelDBModel.Useri">
+              <MappingFragment StoreEntitySet="Useri">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nume" ColumnName="Nume" />
+                <ScalarProperty Name="Prenume" ColumnName="Prenume" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Tip" ColumnName="Tip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ManagerDotari" TypeName="HotelDBModel.ManagerDotari" StoreEntitySet="ManagerDotari">
+            <EndProperty Name="Camere">
+              <ScalarProperty Name="ID" ColumnName="ID_CAM" />
+            </EndProperty>
+            <EndProperty Name="Dotari">
+              <ScalarProperty Name="ID" ColumnName="ID_DOT" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ManagerServicii" TypeName="HotelDBModel.ManagerServicii" StoreEntitySet="ManagerServicii">
+            <EndProperty Name="Servicii">
+              <ScalarProperty Name="ID" ColumnName="ID_SER" />
+            </EndProperty>
+            <EndProperty Name="Useri">
+              <ScalarProperty Name="ID" ColumnName="ID_USR" />
+            </EndProperty>
+          </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="spCRUDCamere" FunctionName="HotelDBModel.Store.spCRUDCamere">
             <ResultMapping>
               <ComplexTypeMapping TypeName="HotelDBModel.spCRUDCamere_Result">
@@ -179,6 +499,33 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spManagerDotari" FunctionName="HotelDBModel.Store.spManagerDotari">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HotelDBModel.spManagerDotari_Result">
+                <ScalarProperty Name="ID_CAM" ColumnName="ID_CAM" />
+                <ScalarProperty Name="ID_DOT" ColumnName="ID_DOT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spManagerServicii" FunctionName="HotelDBModel.Store.spManagerServicii">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HotelDBModel.spManagerServicii_Result">
+                <ScalarProperty Name="ID_USR" ColumnName="ID_USR" />
+                <ScalarProperty Name="ID_SER" ColumnName="ID_SER" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spManagerRezervari" FunctionName="HotelDBModel.Store.spManagerRezervari">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HotelDBModel.spManagerRezervari_Result">
+                <ScalarProperty Name="ID_USR" ColumnName="ID_USR" />
+                <ScalarProperty Name="ID_CAM" ColumnName="ID_CAM" />
+                <ScalarProperty Name="Check_in" ColumnName="Check_in" />
+                <ScalarProperty Name="Check_out" ColumnName="Check_out" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spCalculPret" FunctionName="HotelDBModel.Store.spCalculPret" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

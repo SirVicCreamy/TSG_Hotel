@@ -168,8 +168,12 @@
     <Compile Include="Controllers\CamereCRUDController.cs" />
     <Compile Include="Controllers\DotariCRUDController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManagerDotariController.cs" />
+    <Compile Include="Controllers\ManagerRezervariController.cs" />
     <Compile Include="Controllers\MVCCamereCRUDController.cs" />
     <Compile Include="Controllers\MVCDotariCRUDController.cs" />
+    <Compile Include="Controllers\MVCManagerDotariController.cs" />
+    <Compile Include="Controllers\MVCManagerRezervariController.cs" />
     <Compile Include="Controllers\MVCServiciiCRUDController.cs" />
     <Compile Include="Controllers\ServiciiCRUDController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -194,8 +198,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HotelModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ManagerRezervari.cs">
+      <DependentUpon>HotelModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CamereClass.cs" />
     <Compile Include="Models\DotariClass.cs" />
+    <Compile Include="Models\ManagerDotariClass.cs" />
+    <Compile Include="Models\ManagerRezervariClass.cs" />
+    <Compile Include="Models\ManagerServiciiClass.cs" />
     <Compile Include="Models\ServiciiClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servicii.cs">
@@ -210,6 +220,18 @@
     <Compile Include="spCRUDServicii_Result.cs">
       <DependentUpon>HotelModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="spManagerDotari_Result.cs">
+      <DependentUpon>HotelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spManagerRezervari_Result.cs">
+      <DependentUpon>HotelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spManagerServicii_Result.cs">
+      <DependentUpon>HotelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Useri.cs">
+      <DependentUpon>HotelModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -222,8 +244,8 @@
     <Content Include="Global.asax" />
     <Content Include="HotelModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>HotelModel.Context.cs</LastGenOutput>
       <DependentUpon>HotelModel.edmx</DependentUpon>
+      <LastGenOutput>HotelModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="HotelModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -290,9 +312,11 @@
     <Content Include="Views\MVCCamereCRUD\Edit.cshtml" />
     <Content Include="Views\MVCDotariCRUD\Edit.cshtml" />
     <Content Include="Views\MVCServiciiCRUD\Edit.cshtml" />
+    <Content Include="Views\MVCManagerRezervari\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\MVCManagerDotari\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

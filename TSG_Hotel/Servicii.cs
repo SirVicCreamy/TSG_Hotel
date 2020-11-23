@@ -14,8 +14,17 @@ namespace TSG_Hotel
     
     public partial class Servicii
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Servicii()
+        {
+            this.Useris = new HashSet<Useri>();
+        }
+    
         public int ID { get; set; }
         public string Nume { get; set; }
         public Nullable<int> Pret { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Useri> Useris { get; set; }
     }
 }

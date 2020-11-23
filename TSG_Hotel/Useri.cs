@@ -12,19 +12,25 @@ namespace TSG_Hotel
     using System;
     using System.Collections.Generic;
     
-    public partial class Dotari
+    public partial class Useri
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Dotari()
+        public Useri()
         {
-            this.Cameres = new HashSet<Camere>();
+            this.ManagerRezervaris = new HashSet<ManagerRezervari>();
+            this.Serviciis = new HashSet<Servicii>();
         }
     
         public int ID { get; set; }
         public string Nume { get; set; }
-        public Nullable<int> Pret { get; set; }
+        public string Prenume { get; set; }
+        public string Telefon { get; set; }
+        public string Mail { get; set; }
+        public string Tip { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Camere> Cameres { get; set; }
+        public virtual ICollection<ManagerRezervari> ManagerRezervaris { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Servicii> Serviciis { get; set; }
     }
 }
