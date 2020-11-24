@@ -11,12 +11,10 @@ namespace TSG_Hotel
 {
     using System;
     
-    public partial class spManagerRezervari_Result
+    public partial class spValabilitate_Result
     {
-        public int ID_USR { get; set; }
-        public int ID_CAM { get; set; }
-        public System.DateTime Check_in { get; set; }
-        public System.DateTime Check_out { get; set; }
-        public Nullable<int> Pret_total { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> Capacitate { get; set; }
+        public Nullable<int> Pret { get; set; }
     }
 }

@@ -229,6 +229,9 @@
     <Compile Include="spManagerServicii_Result.cs">
       <DependentUpon>HotelModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="spValabilitate_Result.cs">
+      <DependentUpon>HotelModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Useri.cs">
       <DependentUpon>HotelModel.tt</DependentUpon>
     </Compile>
@@ -312,11 +315,11 @@
     <Content Include="Views\MVCCamereCRUD\Edit.cshtml" />
     <Content Include="Views\MVCDotariCRUD\Edit.cshtml" />
     <Content Include="Views\MVCServiciiCRUD\Edit.cshtml" />
-    <Content Include="Views\MVCManagerRezervari\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\MVCManagerDotari\" />
+    <Folder Include="Views\MVCManagerRezervari\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

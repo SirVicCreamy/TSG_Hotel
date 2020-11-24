@@ -14,10 +14,11 @@ namespace TSG_Hotel.Controllers
         {
             var ci = new DateTime(1, 1, 1);
             var co = new DateTime(1, 1, 1);
-            var results = hotel.spManagerRezervari(0, 0, ci, co, "Get").ToList();
+            var results = hotel.spManagerRezervari(0,0, ci, co,"Get").ToList();
             return Ok(results);
         }
 
+        
 
 
     }

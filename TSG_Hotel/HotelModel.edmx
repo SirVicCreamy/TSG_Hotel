@@ -141,12 +141,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="spCalculPret" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ID_USR" Type="int" Mode="In" />
-          <Parameter Name="ID_CAM" Type="int" Mode="In" />
-          <Parameter Name="Check_in" Type="date" Mode="In" />
-          <Parameter Name="Check_out" Type="date" Mode="In" />
-        </Function>
         <Function Name="spCRUDCamere" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
           <Parameter Name="Capacitate" Type="int" Mode="In" />
@@ -165,6 +159,9 @@
           <Parameter Name="Pret" Type="int" Mode="In" />
           <Parameter Name="Option" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="spDotariInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_CAM" Type="int" Mode="In" />
+        </Function>
         <Function Name="spManagerDotari" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID_CAM" Type="int" Mode="In" />
           <Parameter Name="ID_DOT" Type="int" Mode="In" />
@@ -181,6 +178,9 @@
           <Parameter Name="ID_USR" Type="int" Mode="In" />
           <Parameter Name="ID_SER" Type="int" Mode="In" />
           <Parameter Name="Option" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="spServiciiInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID_USR" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="HotelDBModelStoreContainer">
           <EntitySet Name="Camere" EntityType="Self.Camere" Schema="dbo" store:Type="Tables" />
@@ -249,9 +249,9 @@
           <Property Name="ID_CAM" Type="Int32" Nullable="false" />
           <Property Name="Check_in" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Check_out" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Pret_total" Type="Int32" />
           <NavigationProperty Name="Camere" Relationship="Self.FK__ManagerRe__ID_CA__339FAB6E" FromRole="ManagerRezervari" ToRole="Camere" />
           <NavigationProperty Name="Useri" Relationship="Self.FK__ManagerRe__ID_US__32AB8735" FromRole="ManagerRezervari" ToRole="Useri" />
-          <Property Name="Pret_total" Type="Int32" />
         </EntityType>
         <EntityType Name="Servicii">
           <Key>
@@ -352,11 +352,6 @@
             <Parameter Name="ID_DOT" Mode="In" Type="Int32" />
             <Parameter Name="Option" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="spManagerServicii" ReturnType="Collection(HotelDBModel.spManagerServicii_Result)">
-            <Parameter Name="ID_USR" Mode="In" Type="Int32" />
-            <Parameter Name="ID_SER" Mode="In" Type="Int32" />
-            <Parameter Name="Option" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="spManagerRezervari" ReturnType="Collection(HotelDBModel.spManagerRezervari_Result)">
             <Parameter Name="ID_USR" Mode="In" Type="Int32" />
             <Parameter Name="ID_CAM" Mode="In" Type="Int32" />
@@ -364,11 +359,20 @@
             <Parameter Name="Check_out" Mode="In" Type="DateTime" />
             <Parameter Name="Option" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="spCalculPret">
+          <FunctionImport Name="spManagerServicii" ReturnType="Collection(HotelDBModel.spManagerServicii_Result)">
             <Parameter Name="ID_USR" Mode="In" Type="Int32" />
-            <Parameter Name="ID_CAM" Mode="In" Type="Int32" />
+            <Parameter Name="ID_SER" Mode="In" Type="Int32" />
+            <Parameter Name="Option" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="spValabilitate" ReturnType="Collection(HotelDBModel.spValabilitate_Result)">
             <Parameter Name="Check_in" Mode="In" Type="DateTime" />
             <Parameter Name="Check_out" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="spDotariInfo" ReturnType="Collection(Int32)">
+          <Parameter Name="ID_CAM" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="spServiciiInfo" ReturnType="Collection(Int32)">
+          <Parameter Name="ID_USR" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="spCRUDCamere_Result">
@@ -390,15 +394,21 @@
           <Property Type="Int32" Name="ID_CAM" Nullable="false" />
           <Property Type="Int32" Name="ID_DOT" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="spManagerServicii_Result">
-          <Property Type="Int32" Name="ID_USR" Nullable="false" />
-          <Property Type="Int32" Name="ID_SER" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="spManagerRezervari_Result">
           <Property Type="Int32" Name="ID_USR" Nullable="false" />
           <Property Type="Int32" Name="ID_CAM" Nullable="false" />
           <Property Type="DateTime" Name="Check_in" Nullable="false" />
           <Property Type="DateTime" Name="Check_out" Nullable="false" />
+          <Property Type="Int32" Name="Pret_total" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="spManagerServicii_Result">
+          <Property Type="Int32" Name="ID_USR" Nullable="false" />
+          <Property Type="Int32" Name="ID_SER" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="spValabilitate_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="Capacitate" Nullable="true" />
+          <Property Type="Int32" Name="Pret" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -427,11 +437,11 @@
           <EntitySetMapping Name="ManagerRezervaris">
             <EntityTypeMapping TypeName="HotelDBModel.ManagerRezervari">
               <MappingFragment StoreEntitySet="ManagerRezervari">
-                <ScalarProperty Name="Pret_total" ColumnName="Pret_total" />
                 <ScalarProperty Name="ID_USR" ColumnName="ID_USR" />
                 <ScalarProperty Name="ID_CAM" ColumnName="ID_CAM" />
                 <ScalarProperty Name="Check_in" ColumnName="Check_in" />
                 <ScalarProperty Name="Check_out" ColumnName="Check_out" />
+                <ScalarProperty Name="Pret_total" ColumnName="Pret_total" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -507,6 +517,17 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="spManagerRezervari" FunctionName="HotelDBModel.Store.spManagerRezervari">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HotelDBModel.spManagerRezervari_Result">
+                <ScalarProperty Name="ID_USR" ColumnName="ID_USR" />
+                <ScalarProperty Name="ID_CAM" ColumnName="ID_CAM" />
+                <ScalarProperty Name="Check_in" ColumnName="Check_in" />
+                <ScalarProperty Name="Check_out" ColumnName="Check_out" />
+                <ScalarProperty Name="Pret_total" ColumnName="Pret_total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="spManagerServicii" FunctionName="HotelDBModel.Store.spManagerServicii">
             <ResultMapping>
               <ComplexTypeMapping TypeName="HotelDBModel.spManagerServicii_Result">
@@ -515,17 +536,8 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spManagerRezervari" FunctionName="HotelDBModel.Store.spManagerRezervari">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="HotelDBModel.spManagerRezervari_Result">
-                <ScalarProperty Name="ID_USR" ColumnName="ID_USR" />
-                <ScalarProperty Name="ID_CAM" ColumnName="ID_CAM" />
-                <ScalarProperty Name="Check_in" ColumnName="Check_in" />
-                <ScalarProperty Name="Check_out" ColumnName="Check_out" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="spCalculPret" FunctionName="HotelDBModel.Store.spCalculPret" />
+          <FunctionImportMapping FunctionImportName="spDotariInfo" FunctionName="HotelDBModel.Store.spDotariInfo" />
+          <FunctionImportMapping FunctionImportName="spServiciiInfo" FunctionName="HotelDBModel.Store.spServiciiInfo" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

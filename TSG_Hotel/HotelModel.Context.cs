@@ -113,23 +113,6 @@ namespace TSG_Hotel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spManagerDotari_Result>("spManagerDotari", iD_CAMParameter, iD_DOTParameter, optionParameter);
         }
     
-        public virtual ObjectResult<spManagerServicii_Result> spManagerServicii(Nullable<int> iD_USR, Nullable<int> iD_SER, string option)
-        {
-            var iD_USRParameter = iD_USR.HasValue ?
-                new ObjectParameter("ID_USR", iD_USR) :
-                new ObjectParameter("ID_USR", typeof(int));
-    
-            var iD_SERParameter = iD_SER.HasValue ?
-                new ObjectParameter("ID_SER", iD_SER) :
-                new ObjectParameter("ID_SER", typeof(int));
-    
-            var optionParameter = option != null ?
-                new ObjectParameter("Option", option) :
-                new ObjectParameter("Option", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spManagerServicii_Result>("spManagerServicii", iD_USRParameter, iD_SERParameter, optionParameter);
-        }
-    
         public virtual ObjectResult<spManagerRezervari_Result> spManagerRezervari(Nullable<int> iD_USR, Nullable<int> iD_CAM, Nullable<System.DateTime> check_in, Nullable<System.DateTime> check_out, string option)
         {
             var iD_USRParameter = iD_USR.HasValue ?
@@ -155,16 +138,25 @@ namespace TSG_Hotel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spManagerRezervari_Result>("spManagerRezervari", iD_USRParameter, iD_CAMParameter, check_inParameter, check_outParameter, optionParameter);
         }
     
-        public virtual int spCalculPret(Nullable<int> iD_USR, Nullable<int> iD_CAM, Nullable<System.DateTime> check_in, Nullable<System.DateTime> check_out)
+        public virtual ObjectResult<spManagerServicii_Result> spManagerServicii(Nullable<int> iD_USR, Nullable<int> iD_SER, string option)
         {
             var iD_USRParameter = iD_USR.HasValue ?
                 new ObjectParameter("ID_USR", iD_USR) :
                 new ObjectParameter("ID_USR", typeof(int));
     
-            var iD_CAMParameter = iD_CAM.HasValue ?
-                new ObjectParameter("ID_CAM", iD_CAM) :
-                new ObjectParameter("ID_CAM", typeof(int));
+            var iD_SERParameter = iD_SER.HasValue ?
+                new ObjectParameter("ID_SER", iD_SER) :
+                new ObjectParameter("ID_SER", typeof(int));
     
+            var optionParameter = option != null ?
+                new ObjectParameter("Option", option) :
+                new ObjectParameter("Option", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spManagerServicii_Result>("spManagerServicii", iD_USRParameter, iD_SERParameter, optionParameter);
+        }
+    
+        public virtual ObjectResult<spValabilitate_Result> spValabilitate(Nullable<System.DateTime> check_in, Nullable<System.DateTime> check_out)
+        {
             var check_inParameter = check_in.HasValue ?
                 new ObjectParameter("Check_in", check_in) :
                 new ObjectParameter("Check_in", typeof(System.DateTime));
@@ -173,7 +165,25 @@ namespace TSG_Hotel
                 new ObjectParameter("Check_out", check_out) :
                 new ObjectParameter("Check_out", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("spCalculPret", iD_USRParameter, iD_CAMParameter, check_inParameter, check_outParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spValabilitate_Result>("spValabilitate", check_inParameter, check_outParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> spDotariInfo(Nullable<int> iD_CAM)
+        {
+            var iD_CAMParameter = iD_CAM.HasValue ?
+                new ObjectParameter("ID_CAM", iD_CAM) :
+                new ObjectParameter("ID_CAM", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spDotariInfo", iD_CAMParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> spServiciiInfo(Nullable<int> iD_USR)
+        {
+            var iD_USRParameter = iD_USR.HasValue ?
+                new ObjectParameter("ID_USR", iD_USR) :
+                new ObjectParameter("ID_USR", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spServiciiInfo", iD_USRParameter);
         }
     }
 }
